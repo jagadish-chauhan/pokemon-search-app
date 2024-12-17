@@ -1,6 +1,4 @@
-import { generatePokeImg } from '@/utils/generatePokeImg';
 import { type NextRequest } from 'next/server';
-
 
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
     const id = (await params).id;
@@ -11,7 +9,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     const name = data.name;
     const stats = data.stats.map((value: any) => value.stat.name).join(", ");
     const some_moves = data.moves.slice(0, 5).map((value: any) => value.move.name).join(", ")
-    const front_default = generatePokeImg(id);
+    const front_default = data.sprites.other["official-artwork"].front_default ?? "/fallback-image.png";
     
     return Response.json({
         abilities,
